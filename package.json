@@ -1,0 +1,29 @@
+{
+  "name": "pirex-eth",
+  "version": "1.0.0",
+  "description": "pxETH smart contracts",
+  "scripts": {
+    "lint-sol": "solhint \"src/**/*.sol\"",
+    "lint": "npm run lint-sol",
+    "prepare": "husky install"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/redacted-cartel/pirex-eth.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/redacted-cartel/pirex-eth/issues"
+  },
+  "homepage": "https://github.com/redacted-cartel/pirex-eth#readme",
+  "devDependencies": {
+    "husky": "^7.0.4",
+    "prettier": "^2.5.1",
+    "prettier-plugin-solidity": "^1.0.0-beta.19"
+  },
+  "dependencies": {
+    "solhint": "^3.3.7"
+  }
+}
