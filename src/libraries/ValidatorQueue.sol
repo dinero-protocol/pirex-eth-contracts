@@ -5,12 +5,52 @@ import {SafeCast} from "openzeppelin-contracts/contracts/utils/math/SafeCast.sol
 import {DataTypes} from "./DataTypes.sol";
 import {Errors} from "./Errors.sol";
 
+/**
+ * @title ValidatorQueue
+ * @notice Library for managing a FIFO queue of validators in the Pirex protocol.
+ * @dev This library provides functions for adding, swapping, and removing validators in the validator queue.
+ * It also includes functions for popping validators from the end of the queue, retrieving validator information, and clearing the entire queue.
+ * @author redactedcartel.finance
+ */
 library ValidatorQueue {
-    // Events
+    /**
+     * @notice Emitted when a validator is added to the queue.
+     * @dev This event is emitted when a validator is successfully added to the end of the queue.
+     * @param pubKey               bytes Public key of the added validator.
+     * @param withdrawalCredential bytes Withdrawal credentials associated with the added validator.
+     */
     event ValidatorAdded(bytes pubKey, bytes withdrawalCredential);
+
+    /**
+     * @notice Emitted when the entire validator queue is cleared.
+     * @dev This event is emitted when all validators are removed from the queue, clearing it completely.
+     */
     event ValidatorQueueCleared();
+
+    /**
+     * @notice Emitted when a validator is removed from the queue.
+     * @dev This event is emitted when a validator is successfully removed from the queue, either ordered or unordered.
+     * @param pubKey      bytes   Public key of the removed validator.
+     * @param removeIndex uint256 Index of the removed validator.
+     * @param unordered   bool    Indicates whether the removal was unordered.
+     */
     event ValidatorRemoved(bytes pubKey, uint256 removeIndex, bool unordered);
+
+    /**
+     * @notice Emitted when validators are popped from the front of the queue.
+     * @dev This event is emitted when validators are successfully popped from the front of the queue.
+     * @param times uint256 Number of pop operations performed.
+     */
     event ValidatorsPopped(uint256 times);
+
+    /**
+     * @notice Emitted when two validators are swapped in the queue.
+     * @dev This event is emitted when two validators are successfully swapped in the queue.
+     * @param fromPubKey bytes   Public key of the first validator being swapped.
+     * @param toPubKey   bytes   Public key of the second validator being swapped.
+     * @param fromIndex  uint256 Index of the first validator.
+     * @param toIndex    uint256 Index of the second validator.
+     */
     event ValidatorsSwapped(
         bytes fromPubKey,
         bytes toPubKey,
@@ -19,10 +59,11 @@ library ValidatorQueue {
     );
 
     /**
-        @notice Add synced validator in the FIFO queue to be ready for staking
-        @param  deque                  DataTypes.ValidatorDeque  Deque
-        @param  validator              DataTypes.Validator       Validator
-        @param  withdrawalCredentials  bytes                     Credentials
+     * @notice Adds a synchronized validator to the FIFO queue, ready for staking.
+     * @dev This function adds a validator to the end of the queue with the associated withdrawal credentials.
+     * @param deque                 DataTypes.ValidatorDeque Storage reference to the validator deque.
+     * @param validator             DataTypes.Validator      Validator information to be added.
+     * @param withdrawalCredentials bytes                    Withdrawal credentials associated with the validator.
      */
     function add(
         DataTypes.ValidatorDeque storage deque,
@@ -40,10 +81,11 @@ library ValidatorQueue {
     }
 
     /**
-        @notice Swap the location of one validator with another
-        @param  deque      DataTypes.ValidatorDeque  Deque
-        @param  fromIndex  int128                    From index 
-        @param  toIndex    int128                    To index
+     * @notice Swaps the location of one validator with another.
+     * @dev This function swaps the position of two validators in the queue.
+     * @param deque     DataTypes.ValidatorDeque Storage reference to the validator deque.
+     * @param fromIndex uint256                  Index of the validator to be swapped.
+     * @param toIndex   uint256                  Index of the validator to swap with.
      */
     function swap(
         DataTypes.ValidatorDeque storage deque,
@@ -82,10 +124,11 @@ library ValidatorQueue {
     }
 
     /**
-        @notice Remove validators from the end of queue, in case they were added in error
-        @param  deque      DataTypes.ValidatorDeque  Deque
-        @param  times      uint256                   Count of pop operations
-        @return validator  DataTypes.Validator       Removed and returned validator
+     * @notice Removes validators from the end of the queue, in case they were added in error.
+     * @dev This function removes validators from the end of the queue, specified by the number of times to pop.
+     * @param  deque     DataTypes.ValidatorDeque Storage reference to the validator deque.
+     * @param  times     uint256                  Number of pop operations to perform.
+     * @return validator DataTypes.Validator      Removed and returned validator.
      */
     function pop(
         DataTypes.ValidatorDeque storage deque,
@@ -111,9 +154,10 @@ library ValidatorQueue {
     }
 
     /**
-        @notice Return whether the deque is empty
-        @param  deque  DataTypes.ValidatorDeque  Deque
-        @return        bool
+     * @notice Check if the deque is empty
+     * @dev Returns true if the validator deque is empty, otherwise false.
+     * @param deque DataTypes.ValidatorDeque Storage reference to the validator deque.
+     * @return      bool                     True if the deque is empty, otherwise false.
      */
     function empty(
         DataTypes.ValidatorDeque storage deque
@@ -122,10 +166,11 @@ library ValidatorQueue {
     }
 
     /**
-        @notice Remove a validator from the array by more gassy loop
-        @param  deque         DataTypes.ValidatorDeque  Deque
-        @param  removeIndex   uint256                   Remove index
-        @return removedPubKey bytes                     public key
+     * @notice Remove a validator from the array using a more gas-efficient loop.
+     * @dev Removes a validator at the specified index and emits an event.
+     * @param  deque         DataTypes.ValidatorDeque Storage reference to the validator deque.
+     * @param  removeIndex   uint256                  Index of the validator to remove.
+     * @return removedPubKey bytes                    Public key of the removed validator.
      */
     function removeOrdered(
         DataTypes.ValidatorDeque storage deque,
@@ -154,10 +199,11 @@ library ValidatorQueue {
     }
 
     /**
-        @notice Remove a validator from the array by swap and pop
-        @param  deque         DataTypes.ValidatorDeque  Deque
-        @param  removeIndex   uint256                   Remove index
-        @return removedPubkey bytes                     Public key   
+     * @notice Remove a validator from the array using swap and pop.
+     * @dev Removes a validator at the specified index by swapping it with the last validator and then popping the last validator.
+     * @param  deque         DataTypes.ValidatorDeque Storage reference to the validator deque.
+     * @param  removeIndex   uint256                  Index of the validator to remove.
+     * @return removedPubkey bytes                    Public key of the removed validator.
      */
     function removeUnordered(
         DataTypes.ValidatorDeque storage deque,
@@ -185,14 +231,15 @@ library ValidatorQueue {
     }
 
     /**
-        @notice Remove the last validator from the validators array and return its information
-        @param  deque                   DataTypes.ValidatorDeque  Deque
-        @param  _withdrawalCredentials  bytes                     Credentials
-        @return pubKey                  bytes                     Key
-        @return withdrawalCredentials   bytes                     Credentials
-        @return signature               bytes                     Signature
-        @return depositDataRoot         bytes32                   Deposit data root
-        @return receiver                address                   account to receive pxEth
+     * @notice Remove the last validator from the validators array and return its information
+     * @dev Removes and returns information about the last validator in the queue.
+     * @param  deque                   DataTypes.ValidatorDeque  Deque
+     * @param  _withdrawalCredentials  bytes                     Credentials
+     * @return pubKey                  bytes                     Key
+     * @return withdrawalCredentials   bytes                     Credentials
+     * @return signature               bytes                     Signature
+     * @return depositDataRoot         bytes32                   Deposit data root
+     * @return receiver                address                   account to receive pxEth
      */
     function getNext(
         DataTypes.ValidatorDeque storage deque,
@@ -226,15 +273,16 @@ library ValidatorQueue {
     }
 
     /**
-        @notice Return the information of the i'th validator in the registry
-        @param  deque                   DataTypes.ValidatorDeque  Deque
-        @param  _withdrawalCredentials  bytes                     Credentials
-        @param  _index                  uint256                   Index
-        @return pubKey                  bytes                     Key
-        @return withdrawalCredentials   bytes                     Credentials
-        @return signature               bytes                     Signature
-        @return depositDataRoot         bytes32                   Deposit data root
-        @return receiver                address                   account to receive pxEth
+     * @notice Return the information of the i'th validator in the registry
+     * @dev Returns information about the validator at the specified index without removing it from the deque.
+     * @param  deque                   DataTypes.ValidatorDeque  Deque
+     * @param  _withdrawalCredentials  bytes                     Credentials
+     * @param  _index                  uint256                   Index
+     * @return pubKey                  bytes                     Key
+     * @return withdrawalCredentials   bytes                     Credentials
+     * @return signature               bytes                     Signature
+     * @return depositDataRoot         bytes32                   Deposit data root
+     * @return receiver                address                   account to receive pxEth
      */
     function get(
         DataTypes.ValidatorDeque storage deque,
@@ -269,8 +317,10 @@ library ValidatorQueue {
     }
 
     /**
-        @notice Empties the validator queue
-        @param  deque  DataTypes.ValidatorDeque  Deque
+     * @notice Empties the validator queue.
+     * @dev Clears the entire validator deque, setting both begin and end to 0.
+     *      Emits an event to signal the clearing of the queue.
+     * @param deque DataTypes.ValidatorDeque Storage reference to the validator deque.
      */
     function clear(DataTypes.ValidatorDeque storage deque) external {
         deque._begin = 0;
@@ -280,9 +330,10 @@ library ValidatorQueue {
     }
 
     /**
-        @notice Returns the number of validators
-        @param  deque  DataTypes.ValidatorDeque  Deque
-        @return        uint256
+     * @notice Returns the number of validators in the queue.
+     * @dev Calculates and returns the number of validators in the deque.
+     * @param deque DataTypes.ValidatorDeque Storage reference to the validator deque.
+     * @return      uint256                  Number of validators in the deque.
      */
     function count(
         DataTypes.ValidatorDeque storage deque

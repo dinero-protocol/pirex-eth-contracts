@@ -2,42 +2,66 @@
 
 pragma solidity 0.8.19;
 
+/**
+ * @title DataTypes
+ * @notice Library containing various data structures and enums for the PirexEth.
+ * @dev This library provides data structures and enums crucial for the functionality of the Pirex protocol.
+ * @author redactedcartel.finance
+ */
 library DataTypes {
     // Validator struct type
     struct Validator {
+        // Publickey of the validator
         bytes pubKey;
+        // Signature associated with the validator
         bytes signature;
+        // Root hash of deposit data for the validator
         bytes32 depositDataRoot;
+        // beneficiazry address to receive pxEth against preDeposit
         address receiver;
     }
 
     // ValidatorDeque struct type
     struct ValidatorDeque {
+        // Beginning index of the validator deque
         int128 _begin;
+        // End index of the validator deque
         int128 _end;
+        // Mapping of validator index to Validator struct
         mapping(int128 => Validator) _validators;
     }
 
     // Burner Account Type
     struct BurnerAccount {
+        // Address of the burner account
         address account;
+        // Amount associated with the burner account
         uint256 amount;
     }
 
     // Configurable fees
     enum Fees {
+        // Fee type for deposit
         Deposit,
+        // Fee type for redemption
         Redemption,
+        // Fee type for instant redemption
         InstantRedemption
     }
 
     // Configurable contracts
     enum Contract {
+        // PxEth contract
         PxEth,
+        // UpxEth contract
         UpxEth,
+        // AutoPxEth contract
         AutoPxEth,
+        // OracleAdapter contract
         OracleAdapter,
+        // PirexEth contract
         PirexEth,
+        // RewardRecipient contract
         RewardRecipient
     }
 
@@ -59,11 +83,5 @@ library DataTypes {
         // and the possibility of starting the withdrawal process (withdrawal_possible) or already completed (withdrawal_done)
         // with the release of ETH, subject to a penalty for the misbehavior.
         Slashed
-    }
-
-    // Types of fee recipients
-    enum FeeRecipient {
-        Treasury,
-        Contributors
     }
 }

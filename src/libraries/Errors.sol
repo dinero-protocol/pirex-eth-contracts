@@ -3,187 +3,202 @@ pragma solidity 0.8.19;
 
 library Errors {
     /**
-     * @notice Zero address specified
+     * @dev Zero address specified
      */
     error ZeroAddress();
 
     /**
-     * @notice Zero amount specified
+     * @dev Zero amount specified
      */
     error ZeroAmount();
 
     /**
-     * @notice Invalid fee specified
+     * @dev Invalid fee specified
      */
     error InvalidFee();
 
     /**
-     * @notice Invalid max fee specified
+     * @dev Invalid max fee specified
      */
     error InvalidMaxFee();
 
     /**
-     * @notice Zero multiplier used
+     * @dev Zero multiplier used
      */
     error ZeroMultiplier();
 
     /**
-     * @notice ETH deposit is paused
+     * @dev ETH deposit is paused
      */
     error DepositingEtherPaused();
 
     /**
-     * @notice ETH deposit is not paused
+     * @dev ETH deposit is not paused
      */
     error DepositingEtherNotPaused();
 
     /**
-     * @notice Contract is paused
+     * @dev Contract is paused
      */
     error Paused();
 
     /**
-     * @notice Contract is not paused
+     * @dev Contract is not paused
      */
     error NotPaused();
 
     /**
-     * @notice Validator not yet dissolved
+     * @dev Validator not yet dissolved
      */
     error NotDissolved();
 
     /**
-     * @notice Validator not yet withdrawable
+     * @dev Validator not yet withdrawable
      */
     error NotWithdrawable();
 
     /**
-     * @notice Validator has been previously used before
+     * @dev Validator has been previously used before
      */
     error NoUsedValidator();
 
     /**
-     * @notice Not oracle adapter
+     * @dev Not oracle adapter
      */
     error NotOracleAdapter();
 
     /**
-     * @notice Not reward recipient
+     * @dev Not reward recipient
      */
     error NotRewardRecipient();
 
     /**
-     * @notice Exceeding max value
+     * @dev Exceeding max value
      */
     error ExceedsMax();
 
     /**
-     * @notice No rewards available
+     * @dev No rewards available
      */
     error NoRewards();
 
     /**
-     * @notice Not PirexEth
+     * @dev Not PirexEth
      */
     error NotPirexEth();
 
     /**
-     * @notice Not minter
+     * @dev Not minter
      */
     error NotMinter();
 
     /**
-     * @notice Not burner
+     * @dev Not burner
      */
     error NotBurner();
 
     /**
-     * @notice Empty string
+     * @dev Empty string
      */
     error EmptyString();
 
     /**
-     * @notice Validator is Not Staking
+     * @dev Validator is Not Staking
      */
     error ValidatorNotStaking();
 
     /**
-     * @notice not enough buffer
+     * @dev not enough buffer
      */
     error NotEnoughBuffer();
 
     /**
-     * @notice validator queue empty
+     * @dev validator queue empty
      */
     error ValidatorQueueEmpty();
 
     /**
-     * @notice out of bounds
+     * @dev out of bounds
      */
     error OutOfBounds();
 
     /**
-     * @notice cannot trigger validator exit
+     * @dev cannot trigger validator exit
      */
     error NoValidatorExit();
 
     /**
-     * @notice cannot initiate redemption partially
+     * @dev cannot initiate redemption partially
      */
     error NoPartialInitiateRedemption();
 
     /**
-     * @notice not enough validators
+     * @dev not enough validators
      */
     error NotEnoughValidators();
 
     /**
-     * @notice not enough ETH
+     * @dev not enough ETH
      */
     error NotEnoughETH();
 
     /**
-     * @notice max processed count is invalid (< 1)
+     * @dev max processed count is invalid (< 1)
      */
     error InvalidMaxProcessedCount();
 
     /**
-     * @notice fromIndex and toIndex are invalid
+     * @dev fromIndex and toIndex are invalid
      */
     error InvalidIndexRanges();
 
     /**
-     * @notice ETH is not allowed
+     * @dev ETH is not allowed
      */
     error NoETHAllowed();
 
     /**
-     * @notice ETH is not passed
+     * @dev ETH is not passed
      */
     error NoETH();
 
     /**
-     * @notice validator status is neither dissolved nor slashed
+     * @dev validator status is neither dissolved nor slashed
      */
     error StatusNotDissolvedOrSlashed();
 
     /**
-     * @notice validator status is neither withdrawable nor staking
+     * @dev validator status is neither withdrawable nor staking
      */
     error StatusNotWithdrawableOrStaking();
 
     /**
-     * @notice account is not approved
+     * @dev account is not approved
      */
     error AccountNotApproved();
 
     /**
-     * @notice invalid token specified
+     * @dev invalid token specified
      */
     error InvalidToken();
 
     /**
-     * @notice not same as deposit size
+     * @dev not same as deposit size
      */
     error InvalidAmount();
+
+    /**
+     * @dev contract not recognised
+     */
+    error UnrecorgnisedContract();
+
+    /**
+     * @dev empty array
+     */
+    error EmptyArray();
+
+    /**
+     * @dev arrays length mismatch
+     */
+    error MismatchedArrayLengths();
 }
