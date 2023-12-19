@@ -1,5 +1,5 @@
 {
-  "name": "pirex-eth",
+  "name": "pirex-eth-contracts",
   "version": "1.0.0",
   "description": "pxETH smart contracts",
   "scripts": {
@@ -9,15 +9,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/redacted-cartel/pirex-eth.git"
+    "url": "git+https://github.com/redacted-cartel/pirex-eth-contracts.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/redacted-cartel/pirex-eth/issues"
+    "url": "https://github.com/redacted-cartel/pirex-eth-contracts/issues"
   },
-  "homepage": "https://github.com/redacted-cartel/pirex-eth#readme",
+  "homepage": "https://github.com/redacted-cartel/pirex-eth-contracts#readme",
   "devDependencies": {
     "husky": "^7.0.4",
     "prettier": "^2.5.1",
